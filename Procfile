@@ -1,1 +1,1 @@
-worker: python listar.py
+worker: python -u listar.py
