@@ -1,1 +1,1 @@
-worker: python -u listar.py
+worker: python -u listar.py $PROJECT sub_worker
