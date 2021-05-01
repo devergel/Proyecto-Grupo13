@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grupo 13</title>
+<script>
+      var full = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '')+'/';
+
+      function sendForm() {
+        alert("Validando registro");
+        
+       if ($('#password').val() != $('#repeat_password').val()){
+          alert('Verifique las contraseñas. No son iguales');
+          return false;
+
+        }
+        $.ajax({
+          type: "POST",
+          url: full+"api/user",
+          data: JSON.stringify({ 'first_name': $('#admnomb').val(), 'last_name': $('#admapel').val(), 'email': $('#admemail').val(), 'password': $('#password').val(), 'company': $('#company').val() }),
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: function(data){
+            alert("Administrador Registrado." );
+            window.location = full;
+          },
+
+          error: function(errMsg){
+            alert("ERROR al adicionar Usuario Administrador.")
+          }
+        }
+        );
+        return false;
+      }
+  </script>
+
+</head>
+<body>
+   <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+        <div class="container-fluid">
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <a class="navbar-brand" href="/">SuperVoices-G13</a>
+            <a class="btn btn-primary" href="/admin">Iniciar sesión</a>
+            <a class="btn btn-primary" href="/addadmin">Registrarse</a>
+            <a class="btn btn-primary" href="/home">Ver concursos</a>
+          </div>
+        </div>
+    </nav>
+    <div class="container pt-4">
+        {% block body %}
+
+        {% endblock %}  
+    </div>
+    
+    <script src="{{url_for('static', filename='popper.min.js')}}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/bootstrap-4.3.1-dist/css/bootstrap.min.css') }}" id="bootstrap-css"/>
+    <script src="{{url_for('static', filename='jquery.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='/bootstrap-4.3.1-dist/js/bootstrap.min.js') }}"></script>
+</body>
+</html>

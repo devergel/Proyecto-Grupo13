@@ -1,0 +1,56 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+   
+<!--<div class="col-md-12 offset-md-0">-->
+    <div class="col-md-12"></div>
+<div>
+    <h1 align="center">Concursos vigentes</h1>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+</div>
+    <!--<div class="card card-body">-->
+        <!--<table class="table table-striped table-hover">-->
+            <!--<table class="table table-sm">-->
+    <div class="table-responsive">
+        <table class="table table-striped">            
+            <thead>
+                <tr>
+                    <td>Nombre Concurso</td>
+                    <td>Fecha Inicio </td>
+                    <td>Fecha Final</td>
+                    <td>Valor a Pagar</td>
+                    <td></td>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                {% for contest in contests %}
+                <tr>
+                    
+                    <td>{{ contest.name }}</td>
+                    <td>{{ contest.begin_date.strftime('%Y-%m-%d') }}</td>
+                    <td>{{ contest.end_date.strftime('%Y-%m-%d') }}</td>
+                    <td>{{ contest.price }}</td>
+                    <td>
+                        <a href="/consultaconcurso/{{contest.id}} " class="btn btn-info">Ver más</a>
+                        
+                    </td>
+
+                 
+                </tr>
+    
+            {% endfor %}
+            </tbody>
+        </TABLE>
+    </div>
+</div>
+
+{% endblock %}

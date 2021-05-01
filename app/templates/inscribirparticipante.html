@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<script src="{{url_for('static', filename='jquery.min.js')}}"></script>
+<div>
+    <h1 align="center">¡Aplica al concurso {{ contest.name }}!</h1>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="alert alert-success" role="alert" align="center">
+                {{ message }}
+            </div>
+        {% endif %}
+    {% endwith %}
+</div>
+
+<div>
+    <form method="POST" enctype="multipart/form-data">
+        <center>
+            <img src="https://storage.googleapis.com/group13_cloud/{{contest.image_url}}" style="height:100px; width:100px;" align="center" />
+            <br><br>
+            Tu E-mail:
+            <input type="text" name="email" id="email" placeholder = "Tu email" class="form-control" required>
+            Tu nombre:<br>
+            <input type="text" name="fname" id="fname" placeholder = "Nombre" class="form-control" required>
+            Tus apellidos: <br>
+            <input type="text" name="lname" id="lname"  placeholder ="Apellidos" class="form-control" required>
+            Tu archivo:
+            <input type="file" name="audio" id="audio" placeholder = "Imagen" class="form-control" required>
+            ¿Deseas dejar alguna observación?<br>
+            <textarea name="observations" id="observations" cols="40" rows="4" placeholder ="Tus observaciones"></textarea>
+            <br><br>
+            <button type="submit" class="btn btn-primary btn-block" id="sendAudio">Enviar Voz</button>
+            <a href="/">Cancelar</a>
+        </center>
+    </form>
+</div>
+{% endblock %}

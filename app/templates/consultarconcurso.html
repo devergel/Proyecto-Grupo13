@@ -1,0 +1,144 @@
+{%if is_authenticated %}
+    {% extends 'layout_admin.html' %}
+{% else %}
+    {% extends 'layout.html' %}
+{% endif %}
+
+{% block body %}
+<script src="{{url_for('static', filename='jquery.min.js')}}"></script>
+<div onload="loadAudios();">
+
+    <!--<div class="col-md-5 offset-md-3"> -->
+    <div >
+        <h1 align="center">Concurso <b><i>{{ contest.name }}</i></b></h1>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <div>
+            <center>
+                <img src="https://storage.googleapis.com/group13_cloud/{{contest.image_url}}" style="height:100px; width:100px;" align="center" />
+            </center>
+        </div>
+        <br>
+        <div align="center">
+             <b>Nombre Concurso:</b><br>{{ contest.name }}<br>
+            <b>Inicio de convocatoria:</b><br>{{ contest.begin_date.strftime('%Y-%m-%d') }}<br>
+            <b>Fin de convocatoria:</b><br>{{ contest.end_date.strftime('%Y-%m-%d') }}<br>
+            <b>Premio:</b><br>$ {{ contest.price }}<br>
+            <b>Guión:</b><br>
+            <textarea name="guio_concurso" id="guion" cols="30" rows="4" readonly>{{ contest.guide }}</textarea>
+            <br><b>Recomendaciones:</b><br>
+            <textarea name="reco_concurso" id="recommendations" cols="30" rows="4" readonly >{{ contest.recommendations }}</textarea>
+        </div>
+    </div>
+    <br>
+
+    <div align="center">
+        {%if is_authenticated %}
+            <a class="btn btn-warning" href="/edit/{{ contest.id }}" role="button">
+                    Editar concurso
+            </a>
+            <a class="btn btn-secondary" href="/indexadmin" role="button">
+                    Volver
+            </a>
+        {% else %}
+            <a class="btn btn-success" href="/participarconcurso/{{ contest.id }}" role="button">
+                    ¡Aplicar al concurso!
+            </a>
+            <a class="btn btn-secondary" href="/home" role="button">
+                    Volver
+            </a>
+        {% endif %}
+    </div>
+    <br>
+    <br>
+    {% if audios %}
+    <div style="width:100%">
+        <h1 align="center">Listado Audios</h1>
+        <div class="card card-body">
+
+            <table class="table table-striped table-hover" >
+                <thead>
+                    <tr>
+                        <td style="width:20%">Email</td>
+                        <td style="width:20%">Nombres</td>
+                        <td style="width:20%">Apellidos</td>
+                        <td>Fecha Creacion</td>
+                        <td>Estado</td>
+                        {%if current_user.is_authenticated %}
+                            <td>Archivo Original</td>
+                            <td>Archivo MP3</td>
+                        {% else %}
+                            <td>Archivo enviado</td>
+                            <td>Escuchar</td>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for audio in audios.items %}
+                    <tr>
+                        <td>{{ audio.email }}</td>
+                        <td>{{ audio.first_name }}</td>
+                        <td>{{ audio.last_name }}</td>
+                        <td>{{ audio.creation_date.day }}/{{ audio.creation_date.month }}/{{ audio.creation_date.year }}
+                            {{ audio.creation_date.hour }}:{{ audio.creation_date.minute }}</td>
+                        <td>{{ audio.status }}</td>
+                        <!--"/api/audios/download/{{audio.original_url}}/1" target="blank"-->
+                        <td><a href="https://storage.googleapis.com/group13_cloud/audio_original/{{audio.original_url}}" download="audio.id"><button class='btn btn-success'>Descargar</button></a></td>
+                        <!--"/api/audios/download/{{audio.original_url}}/2"-->
+                        <td>{%if audio.status=='Convertida'%}<a href="https://storage.googleapis.com/group13_cloud/audio_converted/{{audio.converted_url}}" target="blank">{%endif%}
+                            <button class='btn btn-info' {%if audio.status!='Convertida'%} disabled {%endif%}>Escuchar</button></a></td>
+                    </tr>
+                    {% endfor %}
+                    <!-- Pagination Links-->
+                    <div class="text-right">
+                        <a href="{{ url_for('getAudios', contests_id=contests_id, page=audios.prev_num) }}"
+                           class="btn btn-outline-dark
+                           {% if audios.page == 1 %}disabled{% endif %}">
+                            &laquo;
+                        </a>
+                        <!-- Loop through the number of pages to display a link for each-->
+                        {% for page_num in audios.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                            {% if page_num %}
+                                <!-- Check for the active page and set the link to "Active"-->
+                                {% if audios.page == page_num %}
+                                    <a href="{{ url_for('getAudios', contests_id=contests_id, page=page_num) }}"
+                                       class="btn btn-dark">
+                                        {{ page_num }}
+                                    </a>
+                                {% else %}
+                                    <a href="{{ url_for('getAudios', contests_id=contests_id, page=page_num) }}"
+                                       class="btn btn-outline-dark">
+                                        {{ page_num }}
+                                    </a>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                        <a href="{{ url_for('getAudios', contests_id=contests_id, page=audios.next_num) }}"
+                           class="btn btn-outline-dark
+                           {% if audios.page == audios.pages %}disabled{% endif %}">
+                            &raquo;
+                        </a>
+                    </div>
+                    <p class="text-right mt-3">
+                       Página {{ audios.page }} de {{ audios.pages }}
+                    </p>
+                </tbody>
+            </TABLE>
+        </div>
+    </div>
+    {% endif %}
+
+
+</div>
+
+{% endblock %}

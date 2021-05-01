@@ -1,0 +1,54 @@
+{% extends 'layout_adduser.html' %}
+
+
+{% block body %}
+    
+    <div class="row">
+        
+        <div class="col-md-5 offset-md-3">
+            <h1 align="center">Registro de Administrador</h1>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+    
+                    {% endfor %}    
+                {% endif %}
+            {% endwith %}
+            <div class="card card-body">
+                <!--<form action="/add_administrador" method="POST" onsubmit="return sendForm();">-->
+                <form action="" method="POST" onsubmit="return sendForm();">    
+                    <div class="form-group">
+                        <input type="text" name="admnomb" id="admnomb" placeholder = "Nombres" class="form-control" required>
+                    </div> 
+                    <div class="form-group">    
+                        <input type="text" name="admapel"  id="admapel" placeholder = "Apellidos" class="form-control" required>
+                    </div> 
+                    <div class="form-group">    
+                        <input type="email" name="admemail" id="admemail"  placeholder = "Correo electrónico" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="company" id="company" placeholder = "Compañia" class="form-control" required>
+                    </div>
+                    <div class="form-group">    
+                        <input type="password" name="password" id="password" placeholder ="Contraseña" class="form-control" required>
+                    </div> 
+                    <div class="form-group">        
+                        <input type="password" name="repeat_password" id="repeat_password" placeholder ="Confirmar Contraseña" class="form-control" required>
+                    </div>    
+                    <div class="form-group">        
+                        <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
+                    </div>
+                    <div class="form-group align-middle" align="center">
+                       <a href="/" class="btn btn-secondary">Regresar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

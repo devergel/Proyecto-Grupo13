@@ -1,0 +1,86 @@
+{% extends 'layout_admin.html' %}
+
+{% block body %}
+<script src="{{url_for('static', filename='jquery.min.js')}}"></script>
+<div class="row" onload="loadAudios();">
+        
+    <!--<div class="col-md-5 offset-md-3"> -->
+    <div>
+        {% if Audios %}<h1 align="center">Crear Concurso</h1>
+        {% else %}<h1 align="center">Concurso</h1> {% endif %}
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+
+                {% endfor %}    
+            {% endif %}
+        {% endwith %}
+
+        <div>
+            <form method="POST" enctype="multipart/form-data">
+                <table class="table table-striped table-hover">
+                    <tr>
+                        <td class="form-group">
+                            Nombre Concurso:
+                            <input type="text" name="nom_concurso" id="nom_concurso" placeholder = "Nombre concurso" class="form-control" required>
+                        </td>
+
+                        <td class="form-group">
+                            URL Concurso:<br>
+                            <input type="text" name="url_concurso" id="url_concurso" placeholder = "URL Concurso" class="form-control" readonly>
+
+                        </td>
+                        <td class="form-group">
+                            Fecha Inicio Concurso: <br>
+                            <input type="date" name="fin_concurso" id="fin_concurso"  placeholder ="Fecha Inicio Concurso" class="form-control" required>
+                        </td>
+                        <td class="form-group">
+                            Fecha Fin Concurso:<br>
+                            <input type="date" name="ffi_concurso" id="ffi_concurso" placeholder ="Fecha Final Concurso" class="form-control" required>
+                        </td>
+                        </tr>
+                        <tr>
+
+                        <td class="form-group">
+                            Valor a Pagar:<br>
+                            <input type="number" name="val_concurso" id="val_concurso" placeholder ="Valor a Pagar" class="form-control" required>
+
+                        </td>
+
+                        <td class="form-group">
+                            Guión Concurso:<br>
+                            <textarea name="guion" id="guion" cols="30" rows="4" placeholder ="Guión Concurso" required></textarea>
+                        </td>
+                        <td class="form-group">
+                            Recomendaciones:<br>
+                            <textarea name="recommendations" id="recommendations" cols="30" rows="4" placeholder ="Recomendaciones"> </textarea>
+                        </td>
+                        <td class="form-group">
+                        Imagen Concurso:<br>
+                        <input type="file" name="img_concurso" id="img_concurso" placeholder = "Imagen" class="form-control" required>
+                    </td>
+                    </tr>
+                    <tr>
+                    {% if not audios %}
+                    <td class="form-group">
+
+                        <button type="submit" class="btn btn-primary btn-block" id="sendContest">Guardar</button>
+                    </td>
+                    {% endif %}
+
+                    <td class="form-group align-middle">
+
+                       <a href="/indexadmin">Regresar</a>
+
+                    </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+{% endblock %}

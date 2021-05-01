@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grupo 13</title>
+    <script language='javascript'>
+    $(function(){
+        var full = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '')+'/';
+
+        $('#sendContest').on('click', function (e){
+            e.preventDefault(); // Evitamos que salte el enlace.
+
+            var paqueteDeDatos = new FormData();
+
+            paqueteDeDatos.append('contest_name', $('#nom_concurso').prop('value'));
+            paqueteDeDatos.append('url_contest', $('#url_concurso').prop('value'));
+            paqueteDeDatos.append('initial_date', $('#fin_concurso').prop('value'));
+            paqueteDeDatos.append('end_date', $('#ffi_concurso').prop('value'));
+            paqueteDeDatos.append('price', $('#val_concurso').prop('value'));
+            paqueteDeDatos.append('guion', $('#guion').prop('value'));
+            paqueteDeDatos.append('recommendations', $('#reco_concurso').prop('value'));
+            paqueteDeDatos.append('file', $('#img_concurso')[0].files[0]);
+
+            /* Se envia el paquete de datos por ajax. */
+            $.ajax({
+                url: full+"api/contest",
+                type: 'POST', // Siempre que se envíen ficheros, por POST, no por GET.
+                contentType: false,
+                data: paqueteDeDatos, // Al atributo data se le asigna el objeto FormData.
+                success: function(resultado){ // En caso de que todo salga bien.
+                    alert("Concurso registrado satisfactoriamente." );
+                    window.location = full + "indexadmin";
+                },
+                error: function (){ // Si hay algún error.
+                    alert("ERROR al registrar concurso.");
+                }
+            });
+        });
+    });
+    </script>
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">SuperVoices-G13</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/admin">Administrador</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/participante">Participantes</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    <div class="container pt-4">
+        {% block body %}
+
+        {% endblock %}
+    </div>
+
+    <script src="{{url_for('static', filename='popper.min.js')}}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/bootstrap-4.3.1-dist/css/bootstrap.min.css') }}" id="bootstrap-css"/>
+    <script src="{{url_for('static', filename='jquery.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='/bootstrap-4.3.1-dist/js/bootstrap.min.js') }}"></script>
+</body>
+</html>

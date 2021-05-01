@@ -1,0 +1,53 @@
+{% extends 'layout_admin.html' %}
+
+{% block body %}
+<div class="col-md-12 ">
+    <h1 align="center">Listado concursos</h1>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <div class="table-responsive">
+        <table class="table table-striped"> 
+            <thead>
+                <tr>
+                    <td>Creado</td>
+                    <td>Nombre Concurso</td>
+                    <td>URL</td>
+                    <td>Fecha Inicio </td>
+                    <td>Fecha Final</td>
+                    <td>Valor a Pagar</td>
+                    <td>Acciones</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for contest in contests %}
+                <tr>
+                    
+                    <td>{{ contest.creation_date.strftime('%Y-%m-%d') }}</td>
+                    <td>{{ contest.name }}</td>
+                    <td><a href="/consultaconcurso/{{contest.id}} " class="btn btn-outline-primary">Consultar</a></td>
+                    <td>{{ contest.begin_date.strftime('%Y-%m-%d') }}</td>
+                    <td>{{ contest.end_date.strftime('%Y-%m-%d') }}</td>
+                    <td>{{ contest.price }}</td>
+                    <td>
+                        <a href="/edit/{{contest.id}} " class="btn btn-warning">Editar</a>
+                        <a href="/delete/{{contest.id}} " class="btn btn-danger">Borrar</a>
+                    </td>
+
+                 
+                </tr>
+    
+            {% endfor %}
+            </tbody>
+        </TABLE>
+    </div>
+</div>
+
+
+{% endblock %}

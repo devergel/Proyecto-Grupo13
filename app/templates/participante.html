@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+{% block body %}
+ 
+    <div class="col-md-12 ">
+        <h1 align="center">Listado Concursos Disponibles</h1>
+        <div class="table-responsive">
+            <table class="table table-striped"> 
+                <thead>
+                    <tr>
+                        <td>Ord.</td>
+                        <td>Nombre Concurso</td>
+                        <td>URL</td>
+                        <td>Fecha Inicio </td>
+                        <td>Fecha Final</td>
+                        <td>Valor a Pagar</td>
+                        <td>Operación</td>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for contact in contacts %}
+                    <tr>
+                        <td>{{ contact.1 }}</td>
+                        <td>{{ contact.2 }}</td>
+                        <td>{{ contact.3 }}</td>
+                        <td>{{ contact.4 }}</td>
+                        <td>{{ contact.5 }}</td>
+                        <td>{{ contact.6 }}</td>
+                        <td>
+                            
+                          <!--<a href="/consultaconsurso/{{contact.0}} ">Consultar</a>  -->
+                          <a href="/consultaconcurso/{{contact.0}}">Consultar</a>
+                          <a href="/inscribir/{{contact.0}} ">Inscribirse</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </TABLE>
+        </div>
+ 
+
+
+    </div>
+
+{% endblock %}

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grupo 13</title>
+    <script>
+      var full = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '')+'/';
+          function editForm() {
+
+              $.ajax({
+                  type: "PUT",
+                  url: full+"api/editcontest",
+                  data: JSON.stringify({
+                    'id': $('#id').val(),
+                    'name': $('#nom_concurso').val(),
+                    'begin_date': $('#fin_concurso').val(),
+                    'end_date': $('#ffi_concurso').val(),
+                    'price': $('#val_concurso').val(),
+                    'guide': $('#guion').val(),
+                    'recommendations': $('#recommendations').val()
+                   }),
+                  contentType: "application/json; charset=utf-8",
+                  dataType: "json",
+                  success: function(data){
+                      window.location = full+"indexadmin";
+                  },
+                  error: function(errMsg) {
+                      alert("Error al editar concurso.");
+                  }
+              });
+              return false;
+          }
+      </script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+              <div class="collapse navbar-collapse" id="navbarNav">
+                <a class="navbar-brand" href="/">SuperVoices-G13</a>
+                <a class="btn btn-primary" href="/indexadmin">Gestionar Concursos</a>
+                <a class="btn btn-primary" href="/admincreaconcurso">Crear Concurso</a>
+                <a class="btn btn-primary" href="/logout">Salir</a>
+              </div>
+            </div>
+    </nav>
+    <div class="container pt-4">
+        {% block body %}
+
+        {% endblock %}  
+    </div>
+    
+    <!--<script src="{{url_for('static', filename='popper.min.js')}}"></script>-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/bootstrap-4.3.1-dist/css/bootstrap.min.css') }}" id="bootstrap-css"/>
+    <script src="{{url_for('static', filename='jquery.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='/bootstrap-4.3.1-dist/js/bootstrap.min.js') }}"></script>
+</body>
+</html>

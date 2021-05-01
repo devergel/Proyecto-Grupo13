@@ -1,0 +1,87 @@
+{% extends 'layout_admin.html' %}
+
+{% block body %}
+<script src="{{url_for('static', filename='jquery.min.js')}}"></script>
+<div class="row" onload="loadAudios();">
+
+    <!--<div class="col-md-5 offset-md-3"> -->
+    <div >
+        <h1 align="center">Editar Concurso <i>{{ contest.name }}</i></h1>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <div>
+            <center>
+                <img src="https://storage.googleapis.com/group13_cloud/{{contest.image_url}}" style="height:100px; width:100px;" align="center" />
+                {% if audios %}
+                <h5 align="center">Hay campos que no podrás editar, puesto que ya tienes aplicaciones a tu concurso.</h5>
+                <h5 align="center">En caso de que lo necesites, deberás eliminar este concurso y crear uno nuevo.</h5>
+                {% endif %}
+            </center>
+        </div>
+        <br>
+        <div>
+            <form method="PUT" onsubmit="return editForm();">
+                <input type="hidden" id="id" name="id" value="{{ contest.id }}">
+                <table class="table table-striped table-hover">
+                    <tr>
+                        <td class="form-group">
+                            Nombre Concurso:
+                            <input type="text" id="nom_concurso" name="nom_concurso" class="form-control" required {% if audios %}readonly{% endif %} value="{{ contest.name }}">
+                        </td>
+                        <td class="form-group">
+                            URL Concurso:<br>
+                            <input type="text" id="url_concurso" name="url_concurso" class="form-control" required readonly class="btn btn-primary btn-block" value="/api/audios/{{ contest.name }}">
+
+                        </td>
+                        <td class="form-group">
+                            Fecha Inicio Concurso: <br>
+                            <input type="date" id="fin_concurso" name="fin_concurso" class="form-control" required value="{{ contest.begin_date.strftime('%Y-%m-%d') }}">
+                        </td>
+                        <td class="form-group">
+                            Fecha Fin Concurso:<br>
+                            <input type="date" id="ffi_concurso" name="ffi_concurso" class="form-control" required value="{{ contest.end_date.strftime('%Y-%m-%d') }}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="form-group">
+                            Valor a Pagar:<br>
+                            <input type="number" id="val_concurso" name="val_concurso" class="form-control" required value="{{ contest.price }}">
+                        </td>
+                        <td class="form-group">
+                            Guión Concurso:<br>
+                            <textarea name="guion" id="guion" cols="30" rows="4" required {% if audios %}readonly{% endif %} >{{ contest.guide }}</textarea>
+                        </td>
+                        <td class="form-group">
+                            Recomendaciones:<br>
+                            <textarea name="recommendations" id="recommendations" cols="30" rows="4" required>{{ contest.recommendations }}</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block">Guardar</button>
+                        </td>
+
+                        <td class="form-group align-middle">
+
+                           <a href="/indexadmin" class="btn btn-secondary">Regresar</a>
+
+                        </td>
+                    </tr>
+                </table>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
