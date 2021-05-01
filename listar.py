@@ -184,8 +184,8 @@ class AudioSchema(ma.Schema):
 audio_schema = AudioSchema()
 audios_schema = AudioSchema(many=True)
 
-main_path = "/home/c_caballeroa/Proyecto1-Grupo13/app/Audios/Original/"
-dir_dst = "/home/c_caballeroa/Proyecto1-Grupo13/app/Audios/Converted/"
+main_path = "/app/Audios/Original/"
+dir_dst = "/app/Audios/Converted/"
 
 
 # main_path = "F:\\Uniandes\\S3-Desarrollo de Soluciones Cloud\\Proyecto1-Grupo13b\\Proyecto1-Grupo13\\app\\Original\\"
