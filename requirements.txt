@@ -46,3 +46,4 @@ mongoengine
 flask_mongoengine
 python-binary-memcached
 pylibmc
+newrelic
