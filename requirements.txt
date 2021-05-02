@@ -45,3 +45,4 @@ google-cloud-storage
 mongoengine
 flask_mongoengine
 python-binary-memcached
+pylibmc
