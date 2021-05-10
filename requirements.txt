@@ -48,3 +48,5 @@ python-binary-memcached
 google-cloud
 google-cloud-vision
 sendgrid
+pylibmc
+newrelic
