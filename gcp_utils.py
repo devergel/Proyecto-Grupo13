@@ -25,7 +25,7 @@ def delete_blobs(bucket_name, blob_group):
         os.environ["AUTH_JSON"])
 
     bucket = storage_client.bucket(bucket_name)
-    blobs = storage_client.list_blobs('group13_cloud')
+    blobs = storage_client.list_blobs('grupo13_cloud')
 
     # erase all items with the same ID contest
     for blob in blobs:

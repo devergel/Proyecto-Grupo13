@@ -25,7 +25,7 @@
         {% endwith %}
         <div>
             <center>
-                <img src="https://storage.googleapis.com/group13_cloud/{{contest.image_url}}" style="height:100px; width:100px;" align="center" />
+                <img src="https://storage.googleapis.com/grupo13_cloud/{{contest.image_url}}" style="height:100px; width:100px;" align="center" />
             </center>
         </div>
         <br>
@@ -93,9 +93,9 @@
                             {{ audio.creation_date.hour }}:{{ audio.creation_date.minute }}</td>
                         <td>{{ audio.status }}</td>
                         <!--"/api/audios/download/{{audio.original_url}}/1" target="blank"-->
-                        <td><a href="https://storage.googleapis.com/group13_cloud/audio_original/{{audio.original_url}}" download="audio.id"><button class='btn btn-success'>Descargar</button></a></td>
+                        <td><a href="https://storage.googleapis.com/grupo13_cloud/audio_original/{{audio.original_url}}" download="audio.id"><button class='btn btn-success'>Descargar</button></a></td>
                         <!--"/api/audios/download/{{audio.original_url}}/2"-->
-                        <td>{%if audio.status=='Convertida'%}<a href="https://storage.googleapis.com/group13_cloud/audio_converted/{{audio.converted_url}}" target="blank">{%endif%}
+                        <td>{%if audio.status=='Convertida'%}<a href="https://storage.googleapis.com/grupo13_cloud/audio_converted/{{audio.converted_url}}" target="blank">{%endif%}
                             <button class='btn btn-info' {%if audio.status!='Convertida'%} disabled {%endif%}>Escuchar</button></a></td>
                     </tr>
                     {% endfor %}

@@ -273,7 +273,7 @@ def converted(id_audio):
         fileout = dir_dst + audio.contest_id + "/" + str(audio.id) + ".mp3"
         fileout2 = audio.contest_id + "/" + str(audio.id) + ".mp3"
         print("descarga archivo")
-        gcp_utils.download_blob('group13_cloud',
+        gcp_utils.download_blob('grupo13_cloud',
                                 'audio_original/' + audio.original_url,
                                 main_path + audio.original_url)
 
@@ -289,7 +289,7 @@ def converted(id_audio):
             audio.status = "Convertida"
             audio.converted_url = fileout2
             audio.save()
-            gcp_utils.upload_blob('group13_cloud', dir_dst + fileout2,
+            gcp_utils.upload_blob('grupo13_cloud', dir_dst + fileout2,
                                   'audio_converted/' + fileout2)
             send_email(audio.email, audio.first_name + " " + audio.last_name, contest.name,
                        "http://" + ip + "/consultaconcurso/" + str(contest.id))

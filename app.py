@@ -76,8 +76,8 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 app.config['SECRET_KEY'] = 'S3cretH4sh'
 
 # GCP Config
-GCP_FOLDER = 'https://storage.googleapis.com/group13_cloud/audio_original'
-GCP_FOLDER_CONVERTED = 'https://storage.googleapis.com/group13_cloud/audio_converted'
+GCP_FOLDER = 'https://storage.googleapis.com/grupo13_cloud/audio_original'
+GCP_FOLDER_CONVERTED = 'https://storage.googleapis.com/grupo13_cloud/audio_converted'
 
 # Mongo
 db = MongoEngine(app)
@@ -283,7 +283,7 @@ def post_contest():
     image_contest.save('static/contest_images/' + str(newContest.id) + '/archivo' + final_filename)
 
     # save image to gcp
-    gcp_utils.upload_blob('group13_cloud',
+    gcp_utils.upload_blob('grupo13_cloud',
                           'static/contest_images/' + str(newContest.id) + '/archivo' + final_filename,
                           'contest_images/' + str(newContest.id) + final_filename)
     newContest.image_url = 'contest_images/' + str(newContest.id) + final_filename
@@ -349,13 +349,13 @@ def post_audio(contest_id):
         os.mkdir('Audios/Original/' + contest_id, mode=0o777)
         os.mkdir('Audios/Converted/' + contest_id, mode=0o777)
     audio.save('Audios/Original/' + contest_id + '/' + final_filename)
-    gcp_utils.upload_blob('group13_cloud', 'Audios/Original/' + contest_id + '/' + final_filename,
+    gcp_utils.upload_blob('grupo13_cloud', 'Audios/Original/' + contest_id + '/' + final_filename,
                           'audio_original/' + contest_id + '/' + final_filename)
     newAudio.original_url = contest_id + '/' + final_filename
     newAudio.converted_url = contest_id + '/' + final_filename
     # if audio_name.rsplit('.', 1)[1].upper() in ALLOWED_CONVERTED_EXTENSIONS:
     #    audio.save('Audios/Converted/' + contest_id + '/' + final_filename)
-    #    gcp_utils.upload_blob('group13_cloud', 'Audios/Converted/' + contest_id + '/' + final_filename,
+    #    gcp_utils.upload_blob('grupo13_cloud', 'Audios/Converted/' + contest_id + '/' + final_filename,
     #                          'audio_converted/' + contest_id + '/' + final_filename)
     #    newAudio.status = 'Convertida'
     newAudio.save()
@@ -524,7 +524,7 @@ def borrarconcurso(id):
     if os.path.exists('Audios/Converted/' + str(contest.id)):
         rmtree('Audios/Converted/' + str(contest.id))
     Audio.objects(contest_id=contest.id).delete()
-    gcp_utils.delete_blobs('group13_cloud', str(contest.id))
+    gcp_utils.delete_blobs('grupo13_cloud', str(contest.id))
     contest.delete()
     return redirect(url_for('indexadmin'))
 
@@ -648,7 +648,7 @@ def converted():
             audio.status = "Convertida"
             audio.converted_url = fileout2
             audio.save()
-            gcp_utils.upload_blob('group13_cloud', 'Audios/Converted/' + fileout2,
+            gcp_utils.upload_blob('grupo13_cloud', 'Audios/Converted/' + fileout2,
                                   'audio_converted/' + fileout2)
             send_email(audio.email, audio.first_name + " " + audio.last_name, audio.contest.name,
                        "http://" + ip + "/consultaconcurso/" + str(audio.contest.id))
