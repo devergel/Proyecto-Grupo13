@@ -86,12 +86,12 @@ db = MongoEngine(app)
 ma = Marshmallow(app)
 api = Api(app)
 auth = HTTPBasicAuth()
-cache_servers = os.environ.get('MEMCACHEDCLOUD_SERVERS')
+cache_servers = os.environ.get('MEMCACHIER_BRONZE_SERVERS')
 if cache_servers is None:
     cache.init_app(app, config={'CACHE_TYPE': 'simple'})
 else:
-    cache_user = os.environ.get('MEMCACHEDCLOUD_USERNAME') or ''
-    cache_pass = os.environ.get('MEMCACHEDCLOUD_PASSWORD') or ''
+    cache_user = os.environ.get('MEMCACHIER_BRONZE_USERNAME') or ''
+    cache_pass = os.environ.get('MEMCACHIER_BRONZE_PASSWORD') or ''
     cache.init_app(app,
                    config={'CACHE_TYPE': 'saslmemcached',
                            'CACHE_MEMCACHED_SERVERS': cache_servers.split(','),

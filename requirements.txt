@@ -45,5 +45,8 @@ google-cloud-storage
 mongoengine
 flask_mongoengine
 python-binary-memcached
+google-cloud
+google-cloud-vision
+sendgrid
 pylibmc
 newrelic
