@@ -292,7 +292,7 @@ def converted(id_audio):
             gcp_utils.upload_blob('grupo13_cloud', dir_dst + fileout2,
                                   'audio_converted/' + fileout2)
             send_email(audio.email, audio.first_name + " " + audio.last_name, contest.name,
-                       "http://" + ip + "/consultaconcurso/" + str(contest.id))
+                       os.environ["DNS"] + "/consultaconcurso/" + str(contest.id))
             if os.path.exists(main_path + str(audio.contest_id)):
                 rmtree(main_path + str(audio.contest_id))
             if os.path.exists(dir_dst + str(audio.contest_id)):
