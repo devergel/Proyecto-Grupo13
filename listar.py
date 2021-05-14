@@ -237,7 +237,7 @@ def send_email(email_to='grupo13cloud@gmail.com', name='usuario', contest='', li
     message.attach(part2)  # Create secure connection with server and send email
     # context = ssl.create_default_context()
 
-    with smtplib.SMTP("smtp.sendgrid.net", 587) as server:
+    with smtplib.SMTP("smtp.mailgun.org", 587) as server:
         try:
             server.ehlo()
             server.starttls()
